@@ -337,7 +337,7 @@ public class ScaleChordsGenerator : MonoBehaviour
         List<string> subdominants = new List<string>() { "2", "4" };
         List<string> dominants = new List<string>() { "5" };
         List<string> sensibles = new List<string>() { "7" };
-        //32 compases aprox un minuto de cancion. 
+        //32 measures aprox un minuto de cancion. 
 
 
 
@@ -386,7 +386,7 @@ public class ScaleChordsGenerator : MonoBehaviour
     /*
         
      */
-    public static List<string> melodyCompas(List<string> chord,int beat)
+    public static List<string> melodyMeasure(List<string> chord,int beat)
     {
 
         List<string> chord_notes = new List<string>() { };
@@ -456,7 +456,7 @@ public class ScaleChordsGenerator : MonoBehaviour
             
             List<string> chord = chords_list[int.Parse(progression[i])-1]; //
             int random_beat = Random.Range(0, 3); //plus 1 because the max value is not included
-            List<string> melody_compas = melodyCompas(chord, random_beat); // 0, 1, 2
+            List<string> melody_compas = melodyMeasure(chord, random_beat); // 0, 1, 2
             for (int ii = 0; ii < melody_compas.Count; ii++)
             {
                 string note = melody_compas[ii];
@@ -475,10 +475,10 @@ public class ScaleChordsGenerator : MonoBehaviour
                 }
                 melody_list.Add(modified_note);
             }
-            Debug.Log("melody compas: " + string.Join(",", melody_compas));
+            //Debug.Log("melody compas: " + string.Join(",", melody_compas));
         }
         
-        Debug.Log("melody list: " + string.Join(",", melody_list));
+        //Debug.Log("melody list: " + string.Join(",", melody_list));
         return melody_list;
     }
 
@@ -513,7 +513,7 @@ public class ScaleChordsGenerator : MonoBehaviour
                 progression.Add(tonics[0]); //"1"
             
             }
-            else if (4 % i == 0) // compases pares tendran tonica o subdominante
+            else if (4 % i == 0) // measures pares tendran tonica o subdominante
             {
                 int choice = Random.Range(0, 2); //plus 1 because the max value is not included
                 if (choice == 0)
@@ -610,7 +610,7 @@ public class ScaleChordsGenerator : MonoBehaviour
                     progression.Add(tonics_without_base_note[random_tonic]); //3 or 6, except 1
                     progression.Add(tonics_without_base_note[random_tonic]); //3 or 6, except 1
                 }
-                else if (4 % i == 0) // compases pares tendran tonica o subdominante
+                else if (4 % i == 0) // measures pares tendran tonica o subdominante
                 {
                     int choice = Random.Range(0, 4); //plus 1 because the max value is not included
                     if (choice == 0)
@@ -726,7 +726,7 @@ public class ScaleChordsGenerator : MonoBehaviour
                     progression.Add(tonics[random_tonic]); //3 or 6, except 1
                     progression.Add(tonics[random_tonic]); //3 or 6, except 1
                 }
-                else if (4 % i == 0) // compases pares tendran tonica o subdominante
+                else if (4 % i == 0) // measures pares tendran tonica o subdominante
                 {
                     int choice = Random.Range(0, 3); //plus 1 because the max value is not included
                     if (choice == 0)
@@ -841,7 +841,7 @@ public class ScaleChordsGenerator : MonoBehaviour
                 progression.Add(tonics[0]); //"1"
 
             }
-            else if (4 % i == 0) // compases pares tendran tonica o subdominante
+            else if (4 % i == 0) // measures pares tendran tonica o subdominante
             {
                 int choice = Random.Range(0, 2); //plus 1 because the max value is not included
                 if (choice == 0)

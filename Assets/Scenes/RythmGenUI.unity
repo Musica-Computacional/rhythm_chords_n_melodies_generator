@@ -6206,6 +6206,18 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9d51bf01d25080042b9018f77338f7b3, type: 3}
   - {fileID: 8300000, guid: 7182f943cf3e8ad4a81ef6f257e7a97b, type: 3}
   - {fileID: 8300000, guid: 375503ac4d64d5a42b0d88fa14bacdba, type: 3}
+  - {fileID: 8300000, guid: c12327a972138074da6968427620da00, type: 3}
+  - {fileID: 8300000, guid: 8058abba85c7f194b8abd702e35be945, type: 3}
+  - {fileID: 8300000, guid: 530dac77c356bde40bc069c5798f95af, type: 3}
+  - {fileID: 8300000, guid: 0e7902a0c5cc66b488650dd8ed9200a5, type: 3}
+  - {fileID: 8300000, guid: 0648f97323b8c164086d3a104052f850, type: 3}
+  - {fileID: 8300000, guid: 47648c091feaab24cb1b0b5e45955b69, type: 3}
+  - {fileID: 8300000, guid: f50b7725fd7467a41981abfc07251707, type: 3}
+  - {fileID: 8300000, guid: 21f421798ea26e146a7bbb111f177540, type: 3}
+  - {fileID: 8300000, guid: 0d615be5d21c2254faa9c4b2783d8a80, type: 3}
+  - {fileID: 8300000, guid: c4a90789d252686468258c332a305b20, type: 3}
+  - {fileID: 8300000, guid: bcec6982084595245b9999fdd5a1754d, type: 3}
+  - {fileID: 8300000, guid: 60d29f6f5e1c17a408c5d6aba77cb777, type: 3}
   tonality: C
   playMetronome: 1
   counterControl: 0

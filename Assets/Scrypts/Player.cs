@@ -47,6 +47,7 @@ public class Player : MonoBehaviour
     List<string> melody_list = new List<string>();
     List<List<int>> chords_list_num = new List<List<int>>();
     int previous_chord = 10; //there are only 7 chords in the scale, this is just for initializing
+    string previous_note = "x"; //there are only 7 chords in the scale, this is just for initializing
 
     // arrays
     List<List<int>> rythm = new List<List<int>>();
@@ -114,8 +115,8 @@ public class Player : MonoBehaviour
         chords_list = ScaleChordsGenerator.chordsList(tonality);
         progression_to_use = ScaleChordsGenerator.progressionToUse(chords_list);
         melody_list = ScaleChordsGenerator.melodyList(progression_to_use, tonality);
-        Debug.Log("progression");
-        Debug.Log(string.Join(",", progression_to_use));
+        Debug.Log("melody list: " + string.Join(",", melody_list));
+        Debug.Log("progression: " + string.Join(",", progression_to_use));
 
         progressionText.GetComponent<Text>().text = "" + string.Join(",", progression_to_use);
 
@@ -165,10 +166,19 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void PlayANote(List<int> chord)
+    private void PlayANote(string note)
     {
-
-        audioSource.PlayOneShot(notes_samples[1], 0.35f);
+        //AudioClip note_sample_to_play;
+        foreach (AudioClip item in notes_samples)
+        { 
+            if (item.name.Contains(note))
+            {
+                //note_sample_to_play = item;
+                audioSource.PlayOneShot(item, 0.50f);  
+                break;
+            }
+        }
+        //audioSource.PlayOneShot(note_sample_to_play, 0.35f);
 
     }
 
@@ -197,6 +207,31 @@ public class Player : MonoBehaviour
         }
 
         previous_chord = int.Parse(progression_to_use[counter_progression]);
+
+    }
+
+    private void PlayMelodyWithRythm(List<int> chord = null)
+    {
+        /*if (counter_progression == progression_to_use.Count)
+        {
+            StopRythm();
+        }*/
+
+        string cur_note = melody_list[counter_progression];
+
+        if (cur_note != previous_note)
+        {
+            //audioSource.Stop(notes_samples[previous_chord], 0.5f);
+            //Debug.Log(cur_note - 1);
+            PlayANote(cur_note);
+        }
+        else if (cur_note == previous_note)
+        {
+            //audioSource.PlayOneShot(notes_samples[num_cur_chord], 0.5f);
+            // poop
+        }
+
+        previous_note = melody_list[counter_progression];
 
     }
 
@@ -251,6 +286,7 @@ public class Player : MonoBehaviour
             if (counterControl % 2 == 0)
             {
                 PlayChordsWithRythm();
+                PlayMelodyWithRythm();
 
                 //Debug.Log("clave beat: " + EvalClavePattern());
 
