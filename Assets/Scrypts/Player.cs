@@ -44,6 +44,7 @@ public class Player : MonoBehaviour
     public string tonality; //= "C";
     List<string> progression_to_use = new List<string>();
     List<List<string>> chords_list = new List<List<string>>();
+    List<string> melody_list = new List<string>();
     List<List<int>> chords_list_num = new List<List<int>>();
     int previous_chord = 10; //there are only 7 chords in the scale, this is just for initializing
 
@@ -111,6 +112,7 @@ public class Player : MonoBehaviour
         Debug.Log("tonality");
         Debug.Log(tonality);
         chords_list = ScaleChordsGenerator.chordsList(tonality);
+        melody_list = ScaleChordsGenerator.melodyList(chords_list);
         progression_to_use = ScaleChordsGenerator.progressionToUse(chords_list);
         Debug.Log("progression");
         Debug.Log(string.Join(",", progression_to_use));
@@ -161,6 +163,13 @@ public class Player : MonoBehaviour
         {
             audioSource.PlayOneShot(notes_samples[item], 0.35f);
         }
+    }
+
+    private void PlayANote(List<int> chord)
+    {
+
+        audioSource.PlayOneShot(notes_samples[1], 0.35f);
+
     }
 
     private void PlayChordsWithRythm(List<int> chord = null)

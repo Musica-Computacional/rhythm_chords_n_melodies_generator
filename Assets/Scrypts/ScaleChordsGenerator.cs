@@ -10,7 +10,7 @@ public class ScaleChordsGenerator : MonoBehaviour
     private static List<string> circulo_quintas_mayores = new List<string>() { "C", "G", "D", "A", "E", "B", "Gb", "Db", "Ab", "Eb", "Bb", "F" };
     private static List<string> circulo_quintas_menores = new List<string>() { "Am", "Em", "Bm", "F#m", "C#m", "G#m", "Ebm", "Bbm", "Fm", "Cm", "Gm", "Dm" };
 
-    private static List<string> escala_cromatica_8ve   = new List<string>() { "C3", "C3#", "D3", "D3#", "E3", "F3", "F3#", "G3", "G3#", "A3", "A3#", "B3", "C4", "C4#", "D4", "D4#", "E4", "F4", "F4#", "G4", "G4#", "A4", "A4#", "B4", "C5", "C5#", "D5" };
+    private static List<string> escala_cromatica_8ve   = new List<string>() { "C3", "C3#", "D3", "D3#", "E3", "F3", "F3#", "G3", "G3#", "A3", "A3#", "B3", "C4", "C4#", "D4", "D4#", "E4", "F4", "F4#", "G4", "G4#", "A4", "A4#", "B4", "C5", "C5#", "D5", "D5#", "E5", "F5", "F5#", "G5", "G5#", "A5", "A5#", "B5" };
     private static List<string> escala_cromatica       = new List<string>() { "C",  "C#",  "D",  "D#",  "E",  "F",  "F#",  "G",  "G#",  "A",  "A#",  "B",  "C",  "C#",  "D",  "D#",  "E",  "F",  "F#",  "G",  "G#",  "A",  "A#",  "B",  "C",  "C#",  "D"  };
 
     private static Dictionary<string, string> sharpsNFlats = new Dictionary<string, string>() { 
@@ -55,7 +55,7 @@ public class ScaleChordsGenerator : MonoBehaviour
         { 2,"II   Subdominante" },
         { 3,"III  Tonica" },
         { 4,"IV   Subdominante" },
-        { 5,"V    Dominante" }, //cambiado a novena con bajo en la 5ta por que la sonoridad de maj7 no suena bien.
+        { 5,"V    Dominante" }, //cambiado a novena con bajo en la 5ta por que la sonoridad de maj7 suena un poco disonante.
         { 6,"VI   Tonica" },
         { 7,"VII° Sensible" }
     };
@@ -63,8 +63,8 @@ public class ScaleChordsGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        List<List<string>> chords_listt = scaleFromNote(note_name);
-        progressionGenerator(chords_listt);
+        //List<List<string>> chords_listt = scaleFromNote(note_name);
+        //progressionGenerator(chords_listt);
     }
 
     // Update is called once per frame
@@ -383,9 +383,100 @@ public class ScaleChordsGenerator : MonoBehaviour
         return progression;
     }
 
+    /*
+        
+     */
+    public static List<string> melodyCompas(List<string> chord,int beat)
+    {
+
+        List<string> chord_notes = new List<string>() { };
+
+
+        for (int i = 0; i < chord_notes.Count; i++)
+        {
+            string temp = chord_notes[i];
+            int randomIndex = Random.Range(i, chord_notes.Count);
+            chord_notes[i] = chord_notes[randomIndex];
+            chord_notes[randomIndex] = temp;
+        }
+
+        List<string> chord_notes2 = new List<string>() { };
+        if (beat == 4)
+        {
+            for (int i = 0; i < chord_notes.Count; i++)
+            {
+                chord_notes2.Add(chord_notes[i]);
+            }
+        }
+        else if (beat == 2)
+        {
+            for (int i = 0; i < chord_notes.Count; i++)
+            {
+                if (i == 3)
+                {
+                    break;
+                }
+                chord_notes2.Add(chord_notes[i]);
+                chord_notes2.Add(chord_notes[i]);
+            }
+        }
+        else if (beat == 1) // 
+        {
+            for (int i = 0; i < chord_notes.Count; i++)
+            {
+                if (i == 1)
+                {
+                    break;
+                }
+                chord_notes2.Add(chord_notes[i]);
+                chord_notes2.Add(chord_notes[i]);
+                chord_notes2.Add(chord_notes[i]);
+                chord_notes2.Add(chord_notes[i]);
+            }
+        }
+
+
+        Debug.Log("chordd: "+ string.Join(",", chord));
+        Debug.Log("chord notes: " + string.Join(",", chord_notes));
+        Debug.Log("chord notes2: " + string.Join(",", chord_notes2));
+
+        return chord_notes2;
+    }
+
+    public static List<string> melodyList(List<List<string>> chords_list)
+    {
+        List<string> melody_list = new List<string>();
+        for (int i = 1; i < chords_list.Count; i++)
+        {
+            List<string> chord = chords_list[i];
+            List<string> melody_compas = melodyCompas(chord, 1);
+            for (int ii = 1; ii < 5; ii++)
+            {
+                string note = melody_compas[ii];
+                string modified_note = note;
+                if (note.Contains("b"))
+                {
+                    modified_note = getSharpsFromFlat_8ve(note);
+                }
+                
+                if (note.Contains("3"))
+                {
+                    modified_note = note.Replace("3", "4");
+                }else if (note.Contains("4"))
+                {
+                    modified_note = note.Replace("4", "5");
+                }
+                melody_list.Add(modified_note);
+            }
+        }
+        Debug.Log("chord notes2: " + string.Join(",", melody_list));
+        return melody_list;
+    }
+
     public static List<List<string>> chordsList(string note_name)
     {
         List<List<string>> chords_list = scaleFromNote(note_name);
+
         return chords_list;
     }
 
