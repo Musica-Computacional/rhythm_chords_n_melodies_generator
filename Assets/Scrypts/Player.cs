@@ -112,8 +112,8 @@ public class Player : MonoBehaviour
         Debug.Log("tonality");
         Debug.Log(tonality);
         chords_list = ScaleChordsGenerator.chordsList(tonality);
-        melody_list = ScaleChordsGenerator.melodyList(chords_list);
         progression_to_use = ScaleChordsGenerator.progressionToUse(chords_list);
+        melody_list = ScaleChordsGenerator.melodyList(progression_to_use, tonality);
         Debug.Log("progression");
         Debug.Log(string.Join(",", progression_to_use));
 

@@ -391,6 +391,10 @@ public class ScaleChordsGenerator : MonoBehaviour
 
         List<string> chord_notes = new List<string>() { };
 
+        for (int i = 0; i < chord.Count; i++)
+        {
+            chord_notes.Add(chord[i]);
+        }
 
         for (int i = 0; i < chord_notes.Count; i++)
         {
@@ -401,18 +405,18 @@ public class ScaleChordsGenerator : MonoBehaviour
         }
 
         List<string> chord_notes2 = new List<string>() { };
-        if (beat == 4)
+        if (beat == 2) //4
         {
             for (int i = 0; i < chord_notes.Count; i++)
             {
                 chord_notes2.Add(chord_notes[i]);
             }
         }
-        else if (beat == 2)
+        else if (beat == 1) //2
         {
             for (int i = 0; i < chord_notes.Count; i++)
             {
-                if (i == 3)
+                if (i == 2)
                 {
                     break;
                 }
@@ -420,7 +424,7 @@ public class ScaleChordsGenerator : MonoBehaviour
                 chord_notes2.Add(chord_notes[i]);
             }
         }
-        else if (beat == 1) // 
+        else if (beat == 0) // 1
         {
             for (int i = 0; i < chord_notes.Count; i++)
             {
@@ -436,21 +440,24 @@ public class ScaleChordsGenerator : MonoBehaviour
         }
 
 
-        Debug.Log("chordd: "+ string.Join(",", chord));
-        Debug.Log("chord notes: " + string.Join(",", chord_notes));
-        Debug.Log("chord notes2: " + string.Join(",", chord_notes2));
+        //Debug.Log("chordd: "+ string.Join(",", chord));
+        //Debug.Log("chord notes: " + string.Join(",", chord_notes));
+        //Debug.Log("chord notes2: " + string.Join(",", chord_notes2));
 
         return chord_notes2;
     }
 
-    public static List<string> melodyList(List<List<string>> chords_list)
+    public static List<string> melodyList(List<string> progression, string tonality)
     {
+        List<List<string>> chords_list = scaleFromNote(tonality);
         List<string> melody_list = new List<string>();
-        for (int i = 1; i < chords_list.Count; i++)
+        for (int i = 1; i < progression.Count; i=i+4)
         {
-            List<string> chord = chords_list[i];
-            List<string> melody_compas = melodyCompas(chord, 1);
-            for (int ii = 1; ii < 5; ii++)
+            
+            List<string> chord = chords_list[int.Parse(progression[i])-1]; //
+            int random_beat = Random.Range(0, 3); //plus 1 because the max value is not included
+            List<string> melody_compas = melodyCompas(chord, random_beat); // 0, 1, 2
+            for (int ii = 0; ii < melody_compas.Count; ii++)
             {
                 string note = melody_compas[ii];
                 string modified_note = note;
@@ -468,8 +475,10 @@ public class ScaleChordsGenerator : MonoBehaviour
                 }
                 melody_list.Add(modified_note);
             }
+            Debug.Log("melody compas: " + string.Join(",", melody_compas));
         }
-        Debug.Log("chord notes2: " + string.Join(",", melody_list));
+        
+        Debug.Log("melody list: " + string.Join(",", melody_list));
         return melody_list;
     }
 
