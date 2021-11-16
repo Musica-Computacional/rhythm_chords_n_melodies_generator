@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     public Dropdown subDivDropdown;
     public Dropdown styleDropdown;
     public Dropdown tonalityDropdown;
+    public Dropdown toneDropdown;
     public Toggle randomFillerToggle;
     public Text metricText;
     public Text claveText;
@@ -40,8 +41,11 @@ public class Player : MonoBehaviour
 
     [Header(" Armony Related ")]
     //harmony
+    public List<AudioClip> notes_samples_e_piano;
+    public List<AudioClip> notes_samples_g_piano;
     public List<AudioClip> notes_samples;
     public string tonality; //= "C";
+    public string tone; //= "g-piano, e-piano";
     List<string> progression_to_use = new List<string>();
     List<List<string>> chords_list = new List<List<string>>();
     List<string> melody_list = new List<string>();
@@ -67,7 +71,6 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        
     }
 
     public void GenerateRythm()
@@ -109,6 +112,15 @@ public class Player : MonoBehaviour
         Debug.Log("fill_pattern:   " + string.Join(",", filler_pattern));
 
         // HARMONY ------------------
+        tone = toneDropdown.options[toneDropdown.value].text;
+        if (tone == "E-Piano"){
+            notes_samples = notes_samples_e_piano;
+        }
+        else
+        {
+            notes_samples = notes_samples_g_piano;
+        }
+
         tonality = tonalityDropdown.options[tonalityDropdown.value].text;
         Debug.Log("tonality");
         Debug.Log(tonality);
